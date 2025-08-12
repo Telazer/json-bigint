@@ -1,3 +1,4 @@
+import { enableJSONBigIntOverrides } from './JSONOverride';
 import { Replacer, Reviver } from './types';
 import { encodeBigIntString, buildReplacerString, buildReviverString } from './utils';
 
@@ -11,5 +12,9 @@ export class JSONB {
 
   public static parse(text: string, reviver?: Reviver): object {
     return JSON.parse(text, buildReviverString(reviver ?? null));
+  }
+
+  public static override() {
+    enableJSONBigIntOverrides();
   }
 }

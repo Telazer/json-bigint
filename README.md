@@ -18,6 +18,7 @@ npm install @telazer/json-bigint
 
 ## Key Features
 
+- Store BigInt as string in json files.
 - JSONB class or override native JSON with BigInt support
 - Parse and stringify JSON objects containing BigInt values
 - Seamlessly handles conversion between BigInt and JSON-compatible formats
@@ -25,6 +26,19 @@ npm install @telazer/json-bigint
 - Simple drop-in replacement for JSON.stringify and JSON.parse
 
 ---
+
+## Override native JSON with BigInt support
+
+Simply import override to make JSON supports BigInt.
+
+```ts
+// ES2018
+import '@telazer/json-bigint/override';
+// CommonJS
+require('@telazer/json-bigint/override');
+// or
+require('@telazer/json-bigint').override();
+```
 
 ## Import
 
@@ -51,17 +65,6 @@ const jsonbObject = JSONB.parse(jsonbString);
  *		"value": 100n,
  *	}
  */
-```
-
-## Override native JSON with BigInt support
-
-Simply import override.
-
-```ts
-// ES2018
-import '@telazer/json-bigint/override';
-// CommonJS
-require('@telazer/json-bigint/override');
 ```
 
 ---
