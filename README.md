@@ -27,9 +27,9 @@ npm install @telazer/json-bigint
 
 ---
 
-## Override native JSON with BigInt support
+# Override native JSON with BigInt support
 
-Simply import override to make JSON supports BigInt.
+Import the override module to enable BigInt support in the native JSON object. This will modify JSON.stringify() and JSON.parse() to handle BigInt values.
 
 ```ts
 // ES2018
@@ -40,6 +40,27 @@ require('@telazer/json-bigint/override');
 require('@telazer/json-bigint').override();
 ```
 
+After enabling the override, you can use JSON methods with BigInt values directly:
+
+```ts
+JSON.stringify({ value: 100n });
+/*
+ * 	JSON.stringify output
+ *	'{ "value": "100n" }'
+ */
+JSON.parse({ value: '100n' });
+/*
+ *	JSON.parse output
+ *	{
+ *		"value": 100n,
+ *	}
+ */
+```
+
+# Use JSONB class
+
+If you prefer not to override the native JSON object globally, you can use the JSONB class selectively in specific parts of your code
+
 ## Import
 
 ```ts
@@ -49,19 +70,15 @@ import JSONB from '@telazer/json-bigint';
 ## Usage
 
 ```ts
-const jsonbString = JSONB.stringify({ name: 'Bigint Field', value: 100n });
+JSONB.stringify({ value: 100n });
 /*
- * JSONB.stringify output
- *	{
- *		"name": "Bigint Field",
- *		"value": "100n"
- *	}
+ *	JSONB.stringify output
+ *	'{ "value": "100n" }'
  */
-const jsonbObject = JSONB.parse(jsonbString);
+JSONB.parse({ value: '100n' });
 /*
- * JSONB.parse output
+ *	JSONB.parse output
  *	{
- *		"name": "Bigint Field",
  *		"value": 100n,
  *	}
  */
