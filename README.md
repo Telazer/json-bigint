@@ -1,6 +1,6 @@
 # Telazer - JsonBigint
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/Telazer/event-helper)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/Telazer/json-bigint)
 
 For more helpers and utilities, check out the [Telazer NPM Page](https://www.npmjs.com/org/telazer)
 
