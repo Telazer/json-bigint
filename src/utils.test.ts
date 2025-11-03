@@ -1,4 +1,10 @@
-import { isEncodedBigIntString, encodeBigIntString, buildReviverString, buildReplacerString } from './utils';
+import {
+  isEncodedBigIntString,
+  encodeBigIntString,
+  buildReviverString,
+  buildReplacerString,
+  buildReplacerPurify,
+} from './utils';
 
 // Focused test group for isEncodedBigIntString function
 describe('isEncodedBigIntString - Core Functionality', () => {
@@ -138,5 +144,38 @@ describe('buildReplacerString', () => {
     const replacer = buildReplacerString(userReplacer);
     replacer.call({}, 'key', 'hello');
     expect(userReplacer).toHaveBeenCalledWith('key', 'hello');
+  });
+});
+
+describe('buildReplacerPurify', () => {
+  test('removes functions', () => {
+    const replacer = buildReplacerPurify();
+    const obj = { a: 1, b: () => {} };
+    const result = JSON.parse(JSON.stringify(obj, replacer));
+    expect(result).toEqual({ a: 1 });
+  });
+
+  test('removes symbols', () => {
+    const replacer = buildReplacerPurify();
+    const obj = { a: 1, b: Symbol('x') };
+    const result = JSON.parse(JSON.stringify(obj, replacer));
+    expect(result).toEqual({ a: 1 });
+  });
+
+  test('handles circular references gracefully', () => {
+    const replacer = buildReplacerPurify();
+    const obj: any = { a: 1 };
+    obj.self = obj;
+    const result = JSON.parse(JSON.stringify(obj, replacer));
+    expect(result).toEqual({ a: 1 });
+  });
+
+  test('respects custom user replacer', () => {
+    const user = jest.fn((key, value) => (key === 'remove' ? undefined : value));
+    const replacer = buildReplacerPurify(user);
+    const obj = { keep: 1, remove: 2 };
+    const result = JSON.parse(JSON.stringify(obj, replacer));
+    expect(user).toHaveBeenCalled();
+    expect(result).toEqual({ keep: 1 });
   });
 });

@@ -1,4 +1,5 @@
 import { enableJSONBigIntOverrides } from './JSONOverride';
+import { enableJSONPurify } from './JSONPurify';
 import { Replacer, Reviver } from './types';
 import { encodeBigIntString, buildReplacerString, buildReviverString } from './utils';
 
@@ -15,6 +16,7 @@ export class JSONB {
   }
 
   public static override() {
+    enableJSONPurify(); // 1. strip out invalid data
     enableJSONBigIntOverrides();
   }
 }
